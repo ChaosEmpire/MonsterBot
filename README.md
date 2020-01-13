@@ -90,7 +90,7 @@ You can also send the user a start message. Edit the files in "locales/startmsg_
 
    The Users Pokemonlist is shared between all the bots connected to the same Database. So a user can switch between the bots by stopping the one and starting another one. He can now use the same List on multiple Bots.
    
-2. **mrgbotwh.py** is the webhook for MAD. It sends the Pokemon to the users chatid.
+2. **mtgbotwh.py** is the webhook for MAD. It sends the Pokemon to the users chatid.
 
    A Venue message is send if no IV are present.
    
