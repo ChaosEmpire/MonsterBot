@@ -1,0 +1,17 @@
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore
+!mtgbot.py
+!mtgbotwh.py
+!dbupdate.py
+!userreorg.py
+!*.example
+!createdb.sql
+!README.md
+!requirements.txt
+!start_bot.sh
+!start_webhook.sh
+!locales
+!lib
+!log

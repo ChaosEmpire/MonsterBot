@@ -1,0 +1,12 @@
+Hallo.
+
+Dieser Bot soll dich informieren, wenn bestimmte Pokemon in deinem Scannbereich auftauchen.
+
+Hierzu werden Personenbezogene Daten gespeichert.
+Diese Daten werden ausschließlich zur Verwendung im Bot gespeichert und nicht an Dritte weitergegeben.
+
+Um die gespeicherten Daten abzurufen gib /mydata ein.
+Um deine personenbeogenen Daten zu entfernen gib /deleteall ein.
+Es kann nicht sichergestellt werden, in welchem Land deine Daten gespeichert werden.
+
+Mit deiner Anmeldung stimmst du den Nutzungsbedingungen zu.

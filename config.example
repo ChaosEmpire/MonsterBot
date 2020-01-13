@@ -1,0 +1,19 @@
+token=xxxxxxxxxx      # Bot API Token
+locale=de             # Language Settings
+
+port=6000             # Port for webhook
+reorgdays=180         # Days for reorg inactive users
+
+dbname=tgbotdb        # Databse name
+dbhost=127.0.0.1      # Database hostname
+dbport=3306           # Database port
+dbuser=rocketmapuser  # Database user
+dbpassword=xxxxxxxxx  # Database user password
+
+# startmsg=
+
+venuetitle="<pkmn>(<pkmnid>)"
+venuemsg="until <despawn>"
+
+ivmsg="<pkmn>(<pkmnid>)\nIV:<iv> CP:<cp> L:<lvl>\nA:<atk>/D:<def>/S:<sta>\nuntil <despawn>"
+

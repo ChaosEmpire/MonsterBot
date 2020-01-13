@@ -1,0 +1,11 @@
+Hello.
+This bot is designed to let you know when certain Pokemon appear in your scanning area.
+
+For this purpose, personal data are stored.
+These data are stored exclusively for use in the bot and are not shared with third parties.
+
+To retrieve the stored data please type / mydata.
+To remove your personal data please type / deleteall.
+It can not be guaranteed in which country your data will be stored.
+
+With your registration you agree to the terms of use.
