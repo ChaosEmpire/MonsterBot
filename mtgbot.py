@@ -159,10 +159,9 @@ def handle(msg):
 
 		try:
 			pkname = pkmn_loc[str(pkmnid)]["name"]
-			try: 
-				cursor.execute("delete from userassign where chatid = '%s' and pkmnid = '%s'" % (chat_id,pkmnid))
+			if cursor.execute("delete from userassign where chatid = '%s' and pkmnid = '%s'" % (chat_id,pkmnid)):
 				sendtelegram(chat_id, pkname + msg_loc["12"])
-			except:
+			else:
 				sendtelegram(chat_id, pkname + msg_loc["13"])
 		except:
 			sendtelegram(chat_id, str(pkmnid) + msg_loc["10"])
@@ -178,14 +177,13 @@ def handle(msg):
 		if pkmniv > 100:
 			pkmniv = 100
 
-		pkname = pkmn_loc[str(pkmnid)]["name"]
-		if pkname:
-			try:
-				cursor.execute("update userassign set iv = '%s' where chatid = '%s' and pkmnid = '%s'" % (pkmniv,chat_id,pkmnid))
+		try:
+			pkname = pkmn_loc[str(pkmnid)]["name"]
+			if cursor.execute("update userassign set iv = '%s' where chatid = '%s' and pkmnid = '%s'" % (pkmniv,chat_id,pkmnid)):
 				sendtelegram(chat_id, msg_loc["15"].format(str(pkmniv),pkname))
-			except:
+			else:
 				sendtelegram(chat_id, pkname + msg_loc["13"])
-		else:
+		except:
 			sendtelegram(chat_id, str(pkmnid) + msg_loc["10"])
 
         else:
