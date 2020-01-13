@@ -9,6 +9,7 @@
 !*.example
 !createdb.sql
 !README.md
+!LICENSE
 !requirements.txt
 !start_bot.sh
 !start_webhook.sh
