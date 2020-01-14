@@ -270,6 +270,7 @@ reorg.start()
 # create Server
 #
 httpd = SocketServer.TCPServer(("", whport), WebhookHandler )
+httpd.allow_reuse_address = True
 
 log("MonsterGBot {} serving at port {}".format(botname,whport),"webhook")
 
