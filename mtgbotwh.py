@@ -22,47 +22,47 @@ from lib.dbcheck import db_need_update
 from lib.logfile import log
 
 def install_thread_excepthook():
-    run_old = threading.Thread.run
-    def run(*args, **kwargs):
-        try:
-            run_old(*args, **kwargs)
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except:
-            sys.excepthook(*sys.exc_info())
-    threading.Thread.run = run
+	run_old = threading.Thread.run
+	def run(*args, **kwargs):
+		try:
+			run_old(*args, **kwargs)
+		except (KeyboardInterrupt, SystemExit):
+			raise
+		except:
+			sys.excepthook(*sys.exc_info())
+	threading.Thread.run = run
 
 # Webhook Handler
 #
 class WebhookHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
-        def do_POST(self):
-                content_len = int(self.headers.getheader('content-length', 0))
-                self.wfile.write("HTTP/1.1 200 OK\n")
+	def do_POST(self):
+		content_len = int(self.headers.getheader('content-length', 0))
+		self.wfile.write("HTTP/1.1 200 OK\n")
 
-                # Json formatting
-                #
-                jsonlist = self.rfile.read(content_len)
-                messages = json.loads(jsonlist)
+		# Json formatting
+		#
+		jsonlist = self.rfile.read(content_len)
+		messages = json.loads(jsonlist)
 
-                # Loop over all messages
-                #
-                for message in messages:
-                        msgtype=(message['type'])
+		# Loop over all messages
+		#
+		for message in messages:
+			msgtype=(message['type'])
 
-                        if msgtype == "pokemon":
+			if msgtype == "pokemon":
 
-                                message=message['message']
+				message=message['message']
 
-                                # check duplicate message
-                                jdump=json.dumps(message, sort_keys = True).encode("utf-8")
-                                md5=hashlib.md5(jdump).hexdigest()
-                                #despawn=int(message['disappear_time'])
-                                despawn=message['disappear_time']
+				# check duplicate message
+				jdump=json.dumps(message, sort_keys = True).encode("utf-8")
+				md5=hashlib.md5(jdump).hexdigest()
+				#despawn=int(message['disappear_time'])
+				despawn=message['disappear_time']
 
-                                if md5 not in duplicatemsg:
-                                        pkmn_queue.put(message)
-                                        duplicatemsg[md5]=despawn
+				if md5 not in duplicatemsg:
+					pkmn_queue.put(message)
+					duplicatemsg[md5]=despawn
 
 # Bot was blocked
 #
@@ -92,15 +92,15 @@ def textsub(text,message):
 # Reorg duplicate messages
 def reorg_duplicate():
 
-        while True:
-                deleted=0
+	while True:
+		deleted=0
 		reorgtime=int(time())
 		for n in list(duplicatemsg):
 			if duplicatemsg[n] < reorgtime:
 				duplicatemsg.pop(n)
 				deleted += 1
-                log("Reorg duplicate Messages. Deleting {}/{}".format(deleted,len(duplicatemsg.keys())),"webhook")
-                sleep(10)
+		log("Reorg duplicate Messages. Deleting {}/{}".format(deleted,len(duplicatemsg.keys())),"webhook")
+		sleep(10)
 
 # send monster to user
 #
@@ -189,8 +189,8 @@ def sendmonster(pkmn_queue,pkmn_loc):
 ##### MAIN #####
 
 def my_excepthook(excType, excValue, traceback, logger=logging):
-    logging.error("Logging an uncaught exception",
-                 exc_info=(excType, excValue, traceback))
+	logging.error("Logging an uncaught exception",
+		exc_info=(excType, excValue, traceback))
 
 sys.excepthook = my_excepthook
 
@@ -199,58 +199,58 @@ install_thread_excepthook()
 # read inifile
 #
 try:
-        config = ConfigObj("config.ini")
+	config = ConfigObj("config.ini")
 
-        token=config['token']
-        db = config['dbname']
-        dbhost = config['dbhost']
-        dbport = config.get('dbport', '3306')
-        dbuser = config['dbuser']
-        dbpassword = config['dbpassword']
+	token=config['token']
+	db = config['dbname']
+	dbhost = config['dbhost']
+	dbport = config.get('dbport', '3306')
+	dbuser = config['dbuser']
+	dbpassword = config['dbpassword']
 	whport = int(config.get('port', '6000'))
 	venuetitle = config['venuetitle']
 	venuemsg = str(config['venuemsg'])
 	ivmsg = str(config['ivmsg'])
 	locale = str(config.get('locales','de'))
 except:
-        botname = "None"
-        log("Error in config.ini","webhook")
-        quit()
+	botname = "None"
+	log("Error in config.ini","webhook")
+	quit()
 
 # connect to database
 #
 try:
-        connection = pymysql.connect(host=dbhost,
-                                     user=dbuser,
-                                     password=dbpassword,
-                                     db=db,
-                                     port=int(dbport),
-                                     charset='utf8mb4',
-                                     autocommit='True')
-        cursor = connection.cursor()
+	connection = pymysql.connect(host=dbhost,
+		user=dbuser,
+		password=dbpassword,
+		db=db,
+		port=int(dbport),
+		charset='utf8mb4',
+		autocommit='True')
+	cursor = connection.cursor()
 except:
-        log("can not connect to database","webhook")
-        quit()
+	log("can not connect to database","webhook")
+	quit()
 
 if db_need_update(cursor):
-        log("Your DB-Version is to low. Please start dbupdate.py first","webhook")
-        quit()
+	log("Your DB-Version is to low. Please start dbupdate.py first","webhook")
+	quit()
 
 # get bot information
 #
 bot = telepot.Bot(token)
 try:
-        botident = bot.getMe()
-        botname = botident['username']
-        botcallname = botident['first_name']
-        botid = botident['id']
-        try:
-                cursor.execute("insert into bot values ('%s','%s')" % (botid,botname))
-        except:
-                pass
+	botident = bot.getMe()
+	botname = botident['username']
+	botcallname = botident['first_name']
+	botid = botident['id']
+	try:
+		cursor.execute("insert into bot values ('%s','%s')" % (botid,botname))
+	except:
+		pass
 except:
-        log("Error in Telegram. Can not find Botname and ID","webhook")
-        quit()
+	log("Error in Telegram. Can not find Botname and ID","webhook")
+	quit()
 
 # queue for pkmninfo
 #
@@ -276,7 +276,8 @@ log("MonsterGBot {} serving at port {}".format(botname,whport),"webhook")
 
 try:
 	httpd.serve_forever()
-except KeyboardInterrupt:
+finally:
+	print "Server closed"
 	httpd.shutdown()
 	httpd.server_close()
 
