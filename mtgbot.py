@@ -186,15 +186,15 @@ def handle(msg):
 		except:
 			sendtelegram(chat_id, str(pkmnid) + msg_loc["10"])
 
-        else:
+	else:
 		if command[:1] == '/':
 			sendtelegram(chat_id, command + msg_loc["17"])
 
 ### _MAIN_ ###
 
 def my_excepthook(excType, excValue, traceback, logger=logging):
-    logging.error("Logging an uncaught exception",
-                 exc_info=(excType, excValue, traceback))
+	logging.error("Logging an uncaught exception",
+		exc_info=(excType, excValue, traceback))
 
 sys.excepthook = my_excepthook
 logname="user"
@@ -203,13 +203,13 @@ logname="user"
 try:
 	config = ConfigObj("config.ini")
 	token=config.get('token')
-        db = config['dbname']
-        dbhost = config['dbhost']
-        dbport = config.get('dbport', '3306')
-        dbuser = config['dbuser']
-        dbpassword = config['dbpassword']
+	db = config['dbname']
+	dbhost = config['dbhost']
+	dbport = config.get('dbport', '3306')
+	dbuser = config['dbuser']
+	dbpassword = config['dbpassword']
 	locale = config.get('locale', 'de')
-        invstartmsg = config.get('startmsg', "locales/startmsg_" + locale + ".txt")
+	invstartmsg = config.get('startmsg', "locales/startmsg_" + locale + ".txt")
 except:
 	log("Error in config.ini",logname)
 	quit()
@@ -217,13 +217,14 @@ except:
 # connect to database
 #
 try:
-	connection = pymysql.connect(host=dbhost,
-				     user=dbuser,
-				     password=dbpassword,
-				     db=db,
-				     port=int(dbport),
-				     charset='utf8mb4',
-				     autocommit='True')
+	connection = pymysql.connect(
+		host=dbhost,
+		user=dbuser,
+		password=dbpassword,
+		db=db,
+		port=int(dbport),
+		charset='utf8mb4',
+		autocommit='True')
 	cursor = connection.cursor()
 except:
 	log("can not connect to database","user")
@@ -246,8 +247,8 @@ try:
 	except:
 		pass
 except:
-        log("Error in Telegram. Can not find Botname and ID","user")
-        quit()
+	log("Error in Telegram. Can not find Botname and ID","user")
+	quit()
 
 pkmn_loc = json.load(open("locales/monster_" + locale + ".json"))
 msg_loc = json.load(open("locales/msg_" + locale + ".json"))
@@ -255,12 +256,12 @@ msg_loc = json.load(open("locales/msg_" + locale + ".json"))
 # Main Loop
 try:
 
-        MessageLoop(bot, handle).run_as_thread()
+	MessageLoop(bot, handle).run_as_thread()
 
-        log("Bot {} started".format(botname),"user")
+	log("Bot {} started".format(botname),"user")
 
-        while True:
-                sleep(60)
+	while True:
+		sleep(60)
 
 except KeyboardInterrupt:
-        pass
+	pass
