@@ -150,7 +150,7 @@ def sendmonster(pkmn_queue,pkmn_loc):
 			#
 			for chat_id,iv in result_pkmn:
 				if message['iv'] == "None":
-					if iv == 0:
+					if iv == -1:
 						venuetitle1 = textsub(venuetitle,message)
 						venuemsg1 = textsub(venuemsg,message)
 						try:
