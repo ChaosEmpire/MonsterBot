@@ -139,6 +139,8 @@ def handle(msg):
 
 		if pkmniv > 100:
 			pkmniv = 100
+		if pkmniv < -1:
+			pkmniv = -1
 		
 		try:
 			pkname = pkmn_loc[str(pkmnid)]["name"]
