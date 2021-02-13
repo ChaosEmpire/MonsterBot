@@ -80,8 +80,12 @@ You can also send the user a start message. Edit the files in "locales/startmsg_
    add - <PokedexID> [IV]: add a Pokemon to the List. IV is not necessary, default 0
    del - <PokedexID>: delete a Pokemon from the List
    setiv - <PokedexID> <IV>: set the IV% from which reportet
-   stop - : deaktivate the Bot
-   start - : aktivate the Bot
+   delpos - Deletes your GeoData Info you send with TG to the Bot before
+   distance - VALUE set size of geofence around your location
+   pvponly - (0/1) Only send PvP Pokemon 1 or send all 0(default)
+   setiv - <PokedexID> <IV>: set the IV% from which reportet
+   stop - : deactivate the Bot
+   start - : activate the Bot
    mydata - : show your stored personal data
    deleteall - : delete all your data, no recover
    ```
@@ -97,6 +101,8 @@ You can also send the user a start message. Edit the files in "locales/startmsg_
    If IV are present it send an message and a location.
    
    If a user set the IV level and no IV are present then no message is send. The webhook log this with `No message send to {}. SearchIV to low for Pokemon {}({})`
+   
+   The script got extended to handle longer webhooks by the pvpporaclehelper plugin for MAD
 
 3. **userreorg.py** reorganize users who have not used the bot for a long time. Days are set in the inifile.
 
@@ -105,3 +111,6 @@ You can also send the user a start message. Edit the files in "locales/startmsg_
 ### 13. Jan 2020
 
 Initial Version.
+   
+### 13. Feb 2021
+   The script got extended to handle longer webhooks by the pvpporaclehelper plugin for MAD

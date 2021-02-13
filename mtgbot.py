@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/env python
 
 import telepot
 import pymysql.cursors
@@ -23,7 +23,19 @@ def sendtelegram(chatid,msg):
 # Handle for incomming Commands
 def handle(msg):
 	content_type, chat_type, chat_id = telepot.glance(msg)
-	if content_type != 'text':
+	if content_type == 'location':
+		latitude = msg['location']['latitude']
+		longitude = msg['location']['longitude']
+		chatid = msg['from']['id']
+		try:			# insert user location
+			cursor.execute("update user set latitude ='%s', longitude = '%s', distance = 5 where chatid = '%s'" % (latitude,longitude,chatid))
+			sendtelegram(chat_id, msg_loc["23"].format(str(latitude),longitude))
+		except:
+			sendtelegram(chat_id,msg_loc["24"])
+			pass
+		return
+
+	elif content_type != 'text':
 		return
 
 	fromwho = msg.get('from')
@@ -50,7 +62,7 @@ def handle(msg):
 		msg = ""
 		helplist = msg_loc["1"].split("\n")
 		for i in helplist:
-			msg = msg + "{} :\n{}\n".format(i.split(":")[0].encode("utf-8"),i.split(":")[1].encode("utf-8"))
+			msg = msg + "{} :\n{}\n".format(i.split(":")[0],i.split(":")[1])
 		bot.sendMessage(chat_id, msg)
 
 	elif command == "/start":
@@ -66,7 +78,7 @@ def handle(msg):
 		except:
 			pass
 		try:			# insert users information and the bot id
-			cursor.execute("insert into user values ('%s','%s','%s','%s','%s',current_timestamp)" % (botid,username,vname,nname,chat_id))
+			cursor.execute("insert into user values ('%s','%s','%s','%s','%s',NULL,NULL,NULL,current_timestamp)" % (botid,username,vname,nname,chat_id))
 		except:
 			pass
 		sendtelegram(chat_id,msg_loc["2"])
@@ -94,13 +106,13 @@ def handle(msg):
 			sendtelegram(chat_id,msg_loc["5"])
 
 	elif command == "/mydata":	# send users stored information
-		cursor.execute("select botid,username,vorname,nachname,chatid from user where chatid = '%s'" % (chat_id))
+		cursor.execute("select botid,username,vorname,nachname,chatid,latitude,longitude,distance,pvponly from user where chatid = '%s'" % (chat_id))
 		result = cursor.fetchall()
 		if result:
 			for row in result:
 				cursor.execute("select botname from bot where botid = '%s'" % (row[0]))
 				botname = cursor.fetchone()
-				msg = str(msg_loc["21"].format(row[1],row[2],row[3],row[4]).encode("ascii", errors='ignore'))
+				msg = str(msg_loc["21"].format(row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8]))
 				sendtelegram(chat_id,msg)
 		else:
 			sendtelegram(chat_id,msg_loc["22"])
@@ -112,12 +124,12 @@ def handle(msg):
 		sendtelegram(chat_id,msg_loc["20"])
 
 	elif command == "/list":	# list monsterlist to user
-                cursor.execute("select pkmnid,iv from userassign where chatid = '%s'" % (chat_id))
+		cursor.execute("select pkmnid,iv from userassign where chatid = '%s'" % (chat_id))
 		result_p = cursor.fetchall()
 
 		msg = str(msg_loc["16"]) + "\n"
 		for row in result_p:
-			msg = msg + "{} : {} : {}\n".format(row[0],pkmn_loc[str(row[0])]["name"].encode("utf-8"),row[1])
+			msg = msg + "{} : {} : {}\n".format(row[0],pkmn_loc[str(row[0])]["name"],row[1])
 		while len(msg) > 0:	# cut message to telegram max messagesize
 			msgcut = msg[:4096].rsplit("\n",1)[0]
 			sendtelegram(chat_id, msgcut)
@@ -187,6 +199,43 @@ def handle(msg):
 				sendtelegram(chat_id, pkname + msg_loc["13"])
 		except:
 			sendtelegram(chat_id, str(pkmnid) + msg_loc["10"])
+
+	elif command == "/delpos":		# delete User Position
+		chatid = msg['from']['id']
+		try:
+			cursor.execute("update user set latitude = NULL, longitude = NULL, distance = NULL where chatid = '%s'" % (chatid))
+			sendtelegram(chat_id, msg_loc["25"])
+		except:
+			sendtelegram(chat_id,msg_loc["26"])
+			return
+
+	elif command == "/distance":		# radius anpassen
+		chatid = msg['from']['id']
+		try:
+			distance = msg['text'].split(" ")[1]
+		except:
+			sendtelegram(chat_id,msg_loc["29"])
+			return
+		try:
+			cursor.execute("update user set distance = '%s' where chatid = '%s'" % (distance,chatid))
+			sendtelegram(chat_id,msg_loc["27"])
+		except:
+			sendtelegram(chat_id,msg_loc["28"])
+			return
+
+	elif command == "/pvponly":		# pvp only mode
+		chatid = msg['from']['id']
+		try:
+			pvponly = msg['text'].split(" ")[1]
+		except:
+			sendtelegram(chat_id,msg_loc["30"])
+			return
+		try:
+			cursor.execute("update user set pvponly = '%s' where chatid = '%s'" % (pvponly,chatid))
+			sendtelegram(chat_id,msg_loc["31"])
+		except:
+			sendtelegram(chat_id,msg_loc["32"])
+			return
 
 	else:
 		if command[:1] == '/':

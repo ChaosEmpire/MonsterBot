@@ -6,7 +6,11 @@ Hierzu werden Personenbezogene Daten gespeichert.
 Diese Daten werden ausschließlich zur Verwendung im Bot gespeichert und nicht an Dritte weitergegeben.
 
 Um die gespeicherten Daten abzurufen gib /mydata ein.
-Um deine personenbeogenen Daten zu entfernen gib /deleteall ein.
+
 Es kann nicht sichergestellt werden, in welchem Land deine Daten gespeichert werden.
+Um deine personenbeogenen Daten zu entfernen gib /deleteall ein.
+ACHTUNG WIRKT SCHON BEIM KLICK, LÖSCHT ALLES
 
 Mit deiner Anmeldung stimmst du den Nutzungsbedingungen zu.
+
+Eine Liste mit möglichen Kommandos erhälst Du mit /help .

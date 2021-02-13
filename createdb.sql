@@ -13,6 +13,10 @@ CREATE TABLE `user` (
 	`vorname` varchar(45) DEFAULT NULL,
 	`nachname` varchar(45) DEFAULT NULL,
 	`chatid` varchar(45) NOT NULL,
+	`latitude` double DEFAULT NULL,
+	`longitude` double DEFAULT NULL,
+	`distance` int(11) DEFAULT NULL,
+	`pvponly` int(1) NOT NULL,
 	`lastchange` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`chatid`,`botid`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -40,4 +44,4 @@ CREATE TABLE `dbversion` (
 	`version` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`version`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-insert into dbversion values ( "0" );
+insert into dbversion values ( "1" );
