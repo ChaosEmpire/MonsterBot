@@ -19,6 +19,16 @@
 	"18" : "",
 	"19" : "Your ChatID was blockt by the Administrator",
 	"20" : "All your Data was deleted. Bye",
-	"21" : "Userbane: {}\nFirstname: {}\nSurname: {}\nChatid: {}",
-	"22" : "No Userdata found"
+	"21" : "Username: {}\nFirstname: {}\nSurname: {}\nChatid: {}" \nLatitude: {}\nLongitude: {}\nDistance: {}\nPvPonly: {}\n\nAttention: Distance without saved Geolocation saved won't give you any Messages, send Location with Telegram, or reset with /delpos",
+	"22" : "No Userdata found",
+	"23" : "Your Location {},{} has been saved",
+	"24" : "Your Location could not be saved",
+	"25" : "Your Location Data got deleted",
+	"26" : "Could not deleted your Location data",
+	"27" : "Distance got saved. Important: You must have saved your Location too, else you wont see any Pokemon",
+	"28" : "Distance could not be sved",
+	"29" : "You forgot to enter a number behind /distance",
+	"30" : "You forgot to enter a number behind /pvponly. Value 1 only shows Pokemon with PvP Rank, Value 0 shows your Pokemon filtered by IV value",
+	"31" : "PvPonly Value saved",
+	"32" : "PvPonly Value couldnt be saved"
 }

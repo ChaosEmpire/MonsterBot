@@ -78,7 +78,7 @@ def handle(msg):
 		except:
 			pass
 		try:			# insert users information and the bot id
-			cursor.execute("insert into user values ('%s','%s','%s','%s','%s',NULL,NULL,NULL,current_timestamp)" % (botid,username,vname,nname,chat_id))
+			cursor.execute("insert into user values ('%s','%s','%s','%s','%s',NULL,NULL,NULL,'0',current_timestamp)" % (botid,username,vname,nname,chat_id))
 		except:
 			pass
 		sendtelegram(chat_id,msg_loc["2"])
