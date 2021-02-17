@@ -178,8 +178,9 @@ def sendmonster(pkmn_queue,pkmn_loc):
 						try:
 							for great in message['pvp_rankings_great_league']:
 								if great['cp'] >= 1300:
+									pkmn_nameGL = pkmn_loc[str(great['pokemon'])]["name"]
 									print("GL R:" + str(great['rank']) + " L:" + str(great['level']) + " CP:" + str(great['cp'])+ " " + str(great['percentage']) + "% Dex:" + str(great['pokemon']) + " Form:" + str(great['form'])+"\n")
-									greatmsg = "🅿️R:" + str(great['rank']) + " L:" + str(great['level']) + " CP:" + str(great['cp'])+ " " + str(great['percentage']) + "% Dex:" + str(great['pokemon']) + "\n"
+									greatmsg = "🅿️R:" + str(great['rank']) + " L:" + str(great['level']) + " CP:" + str(great['cp'])+ " " + str(great['percentage']) + "% " + str(pkmn_nameGL) + "\n"
 #									greatmsg = "🅿️R:" + str(great['rank']) + " L:" + str(great['level']) + " CP:" + str(great['cp'])+ " " + str(great['percentage']) + "% Dex:" + str(great['pokemon']) + " Form:" + str(great['form'])+"\n"
 									ivmsg1 += greatmsg
 									pvp = 1
@@ -189,9 +190,10 @@ def sendmonster(pkmn_queue,pkmn_loc):
 							pvp = 0
 						try:
 							for ultra in message['pvp_rankings_ultra_league']:
-								if great['cp'] >= 2300:
+								if ultra['cp'] >= 2300:
+									pkmn_nameUL = pkmn_loc[str(ultra['pokemon'])]["name"]
 									print("UL R:" + str(ultra['rank']) + " L:" + str(ultra['level']) + " CP:" + str(ultra['cp'])+ " " + str(ultra['percentage']) + "% Dex:" + str(ultra['pokemon']) + " Form:" + str(ultra['form'])+"\n")
-									ultramsg = "🆚R:" + str(ultra['rank']) + " L:" + str(ultra['level']) + " CP:" + str(ultra['cp'])+ " " + str(ultra['percentage']) + "% Dex:" + str(ultra['pokemon']) +"\n"
+									ultramsg = "🆚R:" + str(ultra['rank']) + " L:" + str(ultra['level']) + " CP:" + str(ultra['cp'])+ " " + str(ultra['percentage']) + "% " + str(pkmn_nameUL) +"\n"
 #									ultramsg = "🆚R:" + str(ultra['rank']) + " L:" + str(ultra['level']) + " CP:" + str(ultra['cp'])+ " " + str(ultra['percentage']) + "% Dex:" + str(ultra['pokemon']) + " Form:" + str(ultra['form'])+"\n"
 									ivmsg1 += ultramsg
 									pvp = 1
